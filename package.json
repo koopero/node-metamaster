@@ -1,0 +1,25 @@
+{
+  "name": "metamaster",
+  "version": "0.0.1",
+  "description": "Extracts meta data from files, with configurable thoroughness.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "metamaster": "bin/metamaster"
+  },
+  "author": {
+    "name": "Samm Zuest Cooper",
+    "email": "samm@sublight.ca"
+  },
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "underscore": "~1.7.0",
+    "async": "~0.9.0",
+    "mmmagic": "~0.3.13",
+    "argparse": "~0.1.16",
+    "handlebars": "~2.0.0",
+    "imagemagick-identify-parser": "0.0.3"
+  }
+}

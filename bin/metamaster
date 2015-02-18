@@ -1,0 +1,72 @@
+#!/bin/sh
+':' //; exec "`command -v nodejs || command -v node`" "$0" "$@"
+// Credit to dancek (http://unix.stackexchange.com/a/65295) for shebang.
+
+/*
+  Get package.json, so we can display the version on CLI
+*/
+
+var packageDotJson = JSON.parse(require('fs').readFileSync(require('path').resolve(__dirname, '../package.json'),'utf8'));
+
+
+var ArgumentParser = require('argparse').ArgumentParser;
+var parser = new ArgumentParser({
+  version: packageDotJson.version,
+  addHelp: true,
+  description: 'Extract meta data from a file'
+});
+parser.addArgument(
+  [ '-f', '--format' ],
+  {
+    choices: ['raw','http'],
+    help: 'Output formatter'
+  }
+);
+
+parser.addArgument(
+  [ 'input' ],
+  {
+    help: 'File to read'
+  }
+);
+
+parser.addArgument(
+  [ '-k', '--keys' ],
+  {
+    help: 'Keys to query'
+  }
+);
+
+parser.addArgument(
+  [ '--verbose' ],
+  {
+    choices: ['raw','http'],
+    action: 'storeTrue',
+    help: 'Log stuff'
+  }
+);
+
+var args = parser.parseArgs();
+
+var file = args.input;
+var opt = {
+  file: file,
+  format: args.format,
+  keys: args.keys,
+  log: args.verbose,
+};
+
+var metaMaster = require('../');
+
+metaMaster( opt, function ( err, result ) {
+  if ( err ) {
+
+  }
+
+  if ( 'string' != typeof result ) {
+    //console.log( 'result', result );
+    result = String( result );
+  }
+
+  process.stdout.write( result );
+} );
